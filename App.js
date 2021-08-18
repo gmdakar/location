@@ -29,8 +29,26 @@ function MarkersViewDyn() {
     <MapView.Marker coordinate={mk.latlng} title={mk.title} />
   ));
 }
+
+/** Display all record markers*/
+function MarkersViewRec() {
+  //remove the last element in the global markers list because it will be later displayed separately fisrt
+  // listRecord.unshift(); //???
+  // unset(listRecord[listRecord.length - 1]); //or maybe?
+
+  return listRecord.map((mk) => (
+    <MapView.Marker coordinate={mk.latlng} title={mk.title} />
+  ));
+}
+
+//record current location as a future marker with specific color
+function recordLocation() {
+  setRecord(true);
+}
+
 export default function App() {
   const [location, setLocation] = useState(null);
+  const [record, setRecord] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [region, setRegion] = useState({
     latitude: 37.78825,
@@ -41,6 +59,9 @@ export default function App() {
 
   //list of all locations caught (future markers)
   const [markers, setMarkers] = useState([]);
+
+  //list of all specifical records locations caught (future markers)
+  const [listRecord, setListRecord] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -57,6 +78,7 @@ export default function App() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
+
       setTimeout(() => {
         setLocation(location);
         console.log(location.coords.latitude + ":" + location.coords.longitude);
@@ -70,17 +92,35 @@ export default function App() {
             longitudeDelta: 0.01,
           });
 
-          //add the previous location as a new marker for future path way markers
-          markers.push({
-            latlng: {
-              latitude: region.latitude,
-              longitude: region.longitude,
-            },
-            title: "test",
-          });
+          if (record === true) {
+            //if specifical record asked by user (onPress)
+            //add the location as a new marker for future recorded marker
+            listRecord.push({
+              latlng: {
+                latitude: region.latitude,
+                longitude: region.longitude,
+              },
+              title: "testrecord",
+            });
 
-          //update the global list of all existing markers
-          setMarkers(markers);
+            //update the global list of all existing listRecord
+            setlistRecord(listRecord);
+
+            //reset flag record
+            setRecord(null);
+          } else {
+            //add the previous location as a new marker for future path way markers
+            markers.push({
+              latlng: {
+                latitude: region.latitude,
+                longitude: region.longitude,
+              },
+              title: "test",
+            });
+
+            //update the global list of all existing markers
+            setMarkers(markers);
+          }
         }
       }, 30000); //@Todo: create a new var for the delay
     })();
@@ -96,11 +136,18 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <MapView region={region} mapType="satellite" style={styles.map}>
+      {/* <MapView region={region} mapType="satellite" style={styles.map}> */}
+      <MapView region={region} style={styles.map}>
         <MapView.Marker coordinate={region} title={"Là bas.."} />
         {/* <MarkersView /> */}
         {/* <MarkersViewDyn /> */}
+        {/* <MarkersViewRec /> */}
       </MapView>
+      {/* <Button
+        title="Record position"
+        style={styles.button}
+        onPress={recordLocation()}
+      /> */}
       <Text style={styles.paragraph}>{text}</Text>
     </View>
   );
@@ -112,6 +159,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
+  },
+  button: {
+    fontSize: 10,
+    textAlign: "center",
   },
   paragraph: {
     fontSize: 10,
