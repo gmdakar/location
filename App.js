@@ -136,18 +136,17 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* <MapView region={region} mapType="satellite" style={styles.map}> */}
-      <MapView region={region} style={styles.map}>
+      <MapView region={region} mapType="satellite" style={styles.map}>
         <MapView.Marker coordinate={region} title={"Là bas.."} />
         {/* <MarkersView /> */}
         {/* <MarkersViewDyn /> */}
         {/* <MarkersViewRec /> */}
       </MapView>
-      {/* <Button
+      <Button
         title="Record position"
         style={styles.button}
         onPress={recordLocation()}
-      /> */}
+      />
       <Text style={styles.paragraph}>{text}</Text>
     </View>
   );
