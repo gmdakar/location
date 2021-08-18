@@ -1,0 +1,20 @@
+ Le volume dans le lecteur C n'a pas de nom.
+ Le num‚ro de s‚rie du volume est 340F-010D
+
+ R‚pertoire de C:\Ostry\Projects\reactnative\location
+
+18/08/2021  15:59    <DIR>          .
+18/08/2021  15:59    <DIR>          ..
+17/08/2021  16:58    <DIR>          .expo
+12/08/2021  15:30               113 .gitignore
+17/08/2021  17:17             3ÿ645 App.js
+14/08/2021  16:49             1ÿ073 app.json
+12/08/2021  16:56    <DIR>          assets
+12/08/2021  15:30               107 babel.config.js
+18/08/2021  15:59                91 delete.txt
+13/08/2021  15:26    <DIR>          node_modules
+12/08/2021  17:41           684ÿ541 package-lock.json
+13/08/2021  15:26               699 package.json
+13/08/2021  15:26           260ÿ085 yarn.lock
+               8 fichier(s)          950ÿ354 octets
+               5 R‚p(s)  443ÿ552ÿ727ÿ040 octets libres
