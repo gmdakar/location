@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Platform, Text, View, StyleSheet, Dimensions } from "react-native";
+import {
+  Platform,
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  Button,
+} from "react-native";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
@@ -20,12 +27,12 @@ function MarkersView() {
 }
 
 /** Display all markers except the last position (supposed to be the current position (or nearly..)*/
-function MarkersViewDyn() {
+function MarkersViewMark() {
   //remove the last element in the global markers list because it will be later displayed separately fisrt
   // markers.unshift(); //???
   // unset(markers[markers.length - 1]); //or maybe?
 
-  return markers.map((mk) => (
+  return listMarkers.map((mk) => (
     <MapView.Marker coordinate={mk.latlng} title={mk.title} />
   ));
 }
@@ -36,16 +43,19 @@ function MarkersViewRec() {
   // listRecord.unshift(); //???
   // unset(listRecord[listRecord.length - 1]); //or maybe?
 
-  return listRecord.map((mk) => (
+  return listRecords.map((mk) => (
     <MapView.Marker coordinate={mk.latlng} title={mk.title} />
   ));
 }
 
 //record current location as a future marker with specific color
 function recordLocation() {
-  setRecord(true);
+  recordFlag = true;
 }
 
+var recordFlag = false;
+var listMarkers = [];
+var listRecords = [];
 export default function App() {
   const [location, setLocation] = useState(null);
   const [record, setRecord] = useState(null);
@@ -81,7 +91,6 @@ export default function App() {
 
       setTimeout(() => {
         setLocation(location);
-        console.log(location.coords.latitude + ":" + location.coords.longitude);
 
         /** my current location */
         if (location) {
@@ -92,7 +101,7 @@ export default function App() {
             longitudeDelta: 0.01,
           });
 
-          if (record === true) {
+          if (recordFlag == true) {
             //if specifical record asked by user (onPress)
             //add the location as a new marker for future recorded marker
             listRecord.push({
@@ -104,10 +113,18 @@ export default function App() {
             });
 
             //update the global list of all existing listRecord
-            setlistRecord(listRecord);
+            setListRecord(listRecord);
+            listRecords = listRecord;
+            console.log(
+              "record => " +
+                location.coords.latitude +
+                ":" +
+                location.coords.longitude
+            );
+            console.log("recordFlag => " + recordFlag);
 
             //reset flag record
-            setRecord(null);
+            recordFlag = false;
           } else {
             //add the previous location as a new marker for future path way markers
             markers.push({
@@ -120,13 +137,22 @@ export default function App() {
 
             //update the global list of all existing markers
             setMarkers(markers);
+            listMarkers = markers;
+            console.log(
+              "marker => " +
+                location.coords.latitude +
+                ":" +
+                location.coords.longitude
+            );
+
+            console.log("recordFlag => " + recordFlag);
           }
         }
       }, 30000); //@Todo: create a new var for the delay
     })();
   }, [location]);
 
-  let text = "Waiting..";
+  let text = "Waiting2..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -137,16 +163,20 @@ export default function App() {
   return (
     <View style={styles.container}>
       <MapView region={region} mapType="satellite" style={styles.map}>
-        <MapView.Marker coordinate={region} title={"Là bas.."} />
         {/* <MarkersView /> */}
-        {/* <MarkersViewDyn /> */}
-        {/* <MarkersViewRec /> */}
+        <MarkersViewMark />
+        <MarkersViewRec />
+        <MapView.Marker coordinate={region} title={"Je suis ici.."} />
       </MapView>
       <Button
         title="Record position"
         style={styles.button}
-        onPress={recordLocation()}
+        onPress={() => recordLocation()}
       />
+
+      {/* <TouchableOpacity onPress={() => this._onPress(item)}>
+         <Text>{item.title}</Text>
+        <TouchableOpacity/> */}
       <Text style={styles.paragraph}>{text}</Text>
     </View>
   );
@@ -157,7 +187,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
   },
   button: {
     fontSize: 10,
@@ -165,10 +194,12 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     fontSize: 10,
+    marginVertical: 20,
     textAlign: "center",
   },
   map: {
+    marginVertical: 10,
     width: Dimensions.get("window").width - 5,
-    height: Dimensions.get("window").height - 45,
+    height: Dimensions.get("window").height - 65,
   },
 });
