@@ -30,35 +30,31 @@ function MarkersView() {
 function MarkersViewMark() {
   //remove the last element in the global markers list because it will be later displayed separately fisrt
 
-  return (
-    listMarkers
-      //.slice(0, -1)
-      .map((mk) => (
-        <MapView.Marker
-          key={Math.floor(Math.random() * 1000000)}
-          coordinate={mk.latlng}
-          title={mk.title}
-          pinColor="#0000ff"
-        />
-      ))
-  );
+  return listMarkers
+    .slice(0, -1)
+    .map((mk) => (
+      <MapView.Marker
+        key={Math.floor(Math.random() * 1000000)}
+        coordinate={mk.latlng}
+        title={mk.title}
+        pinColor="#0000ff"
+      />
+    ));
 }
 
 /** Display all record markers*/
 function MarkersViewRec() {
   //remove the last element in the global markers list because it will be later displayed separately fisrt
-  return (
-    listRecords
-      //.slice(0, -1)
-      .map((mk) => (
-        <MapView.Marker
-          key={Math.floor(Math.random() * 1000000)}
-          coordinate={mk.latlng}
-          title={mk.title}
-          pinColor="#00ff00"
-        />
-      ))
-  );
+  return listRecords
+    .slice(0, -1)
+    .map((mk) => (
+      <MapView.Marker
+        key={Math.floor(Math.random() * 1000000)}
+        coordinate={mk.latlng}
+        title={mk.title}
+        pinColor="#00ff00"
+      />
+    ));
 }
 
 //record current location as a future marker with specific color
