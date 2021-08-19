@@ -29,23 +29,36 @@ function MarkersView() {
 /** Display all markers except the last position (supposed to be the current position (or nearly..)*/
 function MarkersViewMark() {
   //remove the last element in the global markers list because it will be later displayed separately fisrt
-  // markers.unshift(); //???
-  // unset(markers[markers.length - 1]); //or maybe?
 
-  return listMarkers.map((mk) => (
-    <MapView.Marker coordinate={mk.latlng} title={mk.title} />
-  ));
+  return (
+    listMarkers
+      //.slice(0, -1)
+      .map((mk) => (
+        <MapView.Marker
+          key={Math.floor(Math.random() * 1000000)}
+          coordinate={mk.latlng}
+          title={mk.title}
+          pinColor="#0000ff"
+        />
+      ))
+  );
 }
 
 /** Display all record markers*/
 function MarkersViewRec() {
   //remove the last element in the global markers list because it will be later displayed separately fisrt
-  // listRecord.unshift(); //???
-  // unset(listRecord[listRecord.length - 1]); //or maybe?
-
-  return listRecords.map((mk) => (
-    <MapView.Marker coordinate={mk.latlng} title={mk.title} />
-  ));
+  return (
+    listRecords
+      //.slice(0, -1)
+      .map((mk) => (
+        <MapView.Marker
+          key={Math.floor(Math.random() * 1000000)}
+          coordinate={mk.latlng}
+          title={mk.title}
+          pinColor="#00ff00"
+        />
+      ))
+  );
 }
 
 //record current location as a future marker with specific color
@@ -111,7 +124,18 @@ export default function App() {
               },
               title: "testrecord",
             };
-            if (newval != listRecord[listRecord.length - 1]) {
+
+            //check if we should add the same values in the array
+            let notsameprevious = true;
+            if (
+              listRecords.length > 0 &&
+              JSON.stringify(newval) ===
+                JSON.stringify(listRecords[listRecords.length - 1])
+            ) {
+              notsameprevious = false;
+            }
+
+            if (notsameprevious) {
               listRecord.push(newval);
 
               //update the global list of all existing listRecord
@@ -137,7 +161,18 @@ export default function App() {
               title: "testmarker",
             };
 
-            if (newval != markers[markers.length - 1]) {
+            //check if we should add the same values in the array
+            let notsameprevious = true;
+            if (
+              listMarkers.length > 0 &&
+              JSON.stringify(newval) ===
+                JSON.stringify(listMarkers[listMarkers.length - 1])
+            ) {
+              notsameprevious = false;
+              console.log("why");
+            } else console.log("why2");
+            console.log("ooo:" + newval.latlng.latitude);
+            if (notsameprevious) {
               //add the previous location as a new marker for future path way markers
               markers.push(newval);
 
@@ -155,7 +190,7 @@ export default function App() {
             }
           }
         }
-      }, 30000); //@Todo: create a new var for the delay
+      }, 15000); //@Todo: create a new var for the delay
     })();
   }, [location]);
 
