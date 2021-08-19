@@ -104,48 +104,55 @@ export default function App() {
           if (recordFlag == true) {
             //if specifical record asked by user (onPress)
             //add the location as a new marker for future recorded marker
-            listRecord.push({
+            let newval = {
               latlng: {
                 latitude: region.latitude,
                 longitude: region.longitude,
               },
               title: "testrecord",
-            });
+            };
+            if (newval != listRecord[listRecord.length - 1]) {
+              listRecord.push(newval);
 
-            //update the global list of all existing listRecord
-            setListRecord(listRecord);
-            listRecords = listRecord;
-            console.log(
-              "record => " +
-                location.coords.latitude +
-                ":" +
-                location.coords.longitude
-            );
-            console.log("recordFlag => " + recordFlag);
+              //update the global list of all existing listRecord
+              setListRecord(listRecord);
+              listRecords = listRecord;
+              console.log(
+                "record => " +
+                  location.coords.latitude +
+                  ":" +
+                  location.coords.longitude
+              );
+              console.log("recordFlag => " + recordFlag);
 
-            //reset flag record
-            recordFlag = false;
+              //reset flag record
+              recordFlag = false;
+            }
           } else {
-            //add the previous location as a new marker for future path way markers
-            markers.push({
+            let newval = {
               latlng: {
                 latitude: region.latitude,
                 longitude: region.longitude,
               },
-              title: "test",
-            });
+              title: "testmarker",
+            };
 
-            //update the global list of all existing markers
-            setMarkers(markers);
-            listMarkers = markers;
-            console.log(
-              "marker => " +
-                location.coords.latitude +
-                ":" +
-                location.coords.longitude
-            );
+            if (newval != markers[markers.length - 1]) {
+              //add the previous location as a new marker for future path way markers
+              markers.push(newval);
 
-            console.log("recordFlag => " + recordFlag);
+              //update the global list of all existing markers
+              setMarkers(markers);
+              listMarkers = markers;
+              console.log(
+                "marker => " +
+                  location.coords.latitude +
+                  ":" +
+                  location.coords.longitude
+              );
+
+              console.log("recordFlag => " + recordFlag);
+            }
           }
         }
       }, 30000); //@Todo: create a new var for the delay
