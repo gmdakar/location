@@ -131,6 +131,8 @@ export default function App() {
   //list of all specifical records locations caught (future markers)
   const [listRecord, setListRecord] = useState([]);
 
+  const [showPhoto, setShowPhoto] = useState(false);
+
   useEffect(() => {
     (async () => {
       if (Platform.OS === "android" && !Constants.isDevice) {
@@ -249,35 +251,43 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <MapView region={region} mapType="satellite" style={styles.map}>
-        {/* <MarkersView /> */}
-        <MarkersViewMark />
-        <MarkersViewRec />
-        <MapView.Marker coordinate={region} title={"Je suis ici.."}>
-          <Icon
-            reverse
-            size={9}
-            name="child"
-            type="font-awesome"
-            color="#dd0000"
-          />
-        </MapView.Marker>
-      </MapView>
-      <Button
-        title="Record position"
-        style={styles.button}
-        onPress={() => recordLocation()}
-      />
-      <Button
-        title="Show Record Image"
-        style={styles.button}
-        onPress={() => ShowRecordImage()}
-      />
+      {!showPhoto && (
+        <MapView region={region} mapType="satellite" style={styles.map}>
+          {/* <MarkersView /> */}
+          <MarkersViewMark />
+          <MarkersViewRec />
+          <MapView.Marker coordinate={region} title={"Je suis ici.."}>
+            <Icon
+              reverse
+              size={9}
+              name="child"
+              type="font-awesome"
+              color="#dd0000"
+            />
+          </MapView.Marker>
+        </MapView>
+      )}
+      {!showPhoto && (
+        <Button
+          title="Record position"
+          style={styles.button}
+          onPress={() => recordLocation()}
+        />
+      )}
+      {!showPhoto && (
+        <Button
+          title="Show Record Image"
+          style={styles.button}
+          onPress={() => setShowPhoto(true)}
+        />
+      )}
+      {!showPhoto && <Text style={styles.paragraph}>{text}</Text>}
+
+      {showPhoto && ShowRecordImage()}
 
       {/* <TouchableOpacity onPress={() => this._onPress(item)}>
          <Text>{item.title}</Text>
         <TouchableOpacity/> */}
-      <Text style={styles.paragraph}>{text}</Text>
     </View>
   );
 }
