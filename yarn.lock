@@ -5212,6 +5212,20 @@ react-native-elements@^3.4.2:
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
 
+react-native-lightbox-v2@^0.8.8:
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/react-native-lightbox-v2/-/react-native-lightbox-v2-0.8.8.tgz#20dd9a0231fdbd0cde111bfcc6d3844f6d9f6f9e"
+  integrity sha512-Cgonl9A+b78yvVc9voU5763U3N5px7EAeSnM9u78pCg4z1lwPWqKzWkwZx/K0wTMDSfqav4Iizk6enMuUdgg/A==
+  dependencies:
+    prop-types "^15.7.2"
+
+react-native-lightbox@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-lightbox/-/react-native-lightbox-0.8.1.tgz#4e561ec46e61617a0f3f12c88ec2695360998878"
+  integrity sha512-TFZA6iKEEHpAUIXjMTRb6vx0/9rHgEKy3ZBiRAy295PwldYg5c8opwnbyURLIl522ykeqhVx9uGdXjSMIowLvA==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-maps@0.27.1:
   version "0.27.1"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.27.1.tgz#2f10cd417bb2fd938c9e015b1c9b6d9b1a44b97f"

@@ -6,11 +6,36 @@ import {
   StyleSheet,
   Dimensions,
   Button,
+  Image,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
+import Lightbox from "react-native-lightbox-v2";
+
+/** l*/
+function ShowRecordImage() {
+  console.log("ShowRecordImage");
+  return (
+    <View style={styles.container}>
+      <Lightbox>
+        <Image
+          style={{ height: 300, width: 300 }}
+          source={{
+            uri: "http://knittingisawesome.com/wp-content/uploads/2012/12/cat-wearing-a-reindeer-hat1.jpg",
+          }}
+        />
+        <Image
+          style={{ height: 300, width: 300 }}
+          source={{
+            uri: "http://knittingisawesome.com/wp-content/uploads/2012/12/cat-wearing-a-reindeer-hat1.jpg",
+          }}
+        />
+      </Lightbox>
+    </View>
+  );
+}
 
 /** list of others markers (path taken) */
 function MarkersView() {
@@ -242,6 +267,11 @@ export default function App() {
         title="Record position"
         style={styles.button}
         onPress={() => recordLocation()}
+      />
+      <Button
+        title="Show Record Image"
+        style={styles.button}
+        onPress={() => ShowRecordImage()}
       />
 
       {/* <TouchableOpacity onPress={() => this._onPress(item)}>
