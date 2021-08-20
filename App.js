@@ -6,8 +6,8 @@ import {
   StyleSheet,
   Dimensions,
   Button,
-  Image,
 } from "react-native";
+import { Icon } from "react-native-elements";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
@@ -40,8 +40,16 @@ function MarkersViewMark() {
           coordinate={mk.latlng}
           title={mk.title}
           pinColor="#0000ff"
-          // <Image source={require('./marker.png')} style={{height: 35, width:35 }} />
-        />
+        >
+          {/* <Image source={require('./marker.png')} style={{height: 35, width:35 }} /> */}
+          <Icon
+            reverse
+            size={1}
+            name="plug"
+            type="font-awesome"
+            color="#3434ee"
+          />
+        </MapView.Marker>
       ))
   );
 }
@@ -58,8 +66,17 @@ function MarkersViewRec() {
           coordinate={mk.latlng}
           title={mk.title}
           pinColor="#00ff00"
-          // <Image source={require('./record.png')} style={{height: 15, width:15 }} />
-        />
+          // icon={require("./record.png")}
+        >
+          {/* <Image source={require('./record.png')} style={{height: 35, width:35 }} /> */}
+          <Icon
+            reverse
+            size={9}
+            name="clipboard"
+            type="font-awesome"
+            color="#123456"
+          />
+        </MapView.Marker>
       ))
   );
 }
@@ -197,7 +214,7 @@ export default function App() {
     })();
   }, [location]);
 
-  let text = "Waiting2..";
+  let text = "Wait..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -211,7 +228,15 @@ export default function App() {
         {/* <MarkersView /> */}
         <MarkersViewMark />
         <MarkersViewRec />
-        <MapView.Marker coordinate={region} title={"Je suis ici.."} />
+        <MapView.Marker coordinate={region} title={"Je suis ici.."}>
+          <Icon
+            reverse
+            size={9}
+            name="child"
+            type="font-awesome"
+            color="#dd0000"
+          />
+        </MapView.Marker>
       </MapView>
       <Button
         title="Record position"
