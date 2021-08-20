@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   Button,
+  Image,
 } from "react-native";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
@@ -30,31 +31,37 @@ function MarkersView() {
 function MarkersViewMark() {
   //remove the last element in the global markers list because it will be later displayed separately fisrt
 
-  return listMarkers
-    .slice(0, -1)
-    .map((mk) => (
-      <MapView.Marker
-        key={Math.floor(Math.random() * 1000000)}
-        coordinate={mk.latlng}
-        title={mk.title}
-        pinColor="#0000ff"
-      />
-    ));
+  return (
+    listMarkers
+      //.slice(0, -1)
+      .map((mk) => (
+        <MapView.Marker
+          key={Math.floor(Math.random() * 1000000)}
+          coordinate={mk.latlng}
+          title={mk.title}
+          pinColor="#0000ff"
+          // <Image source={require('./marker.png')} style={{height: 35, width:35 }} />
+        />
+      ))
+  );
 }
 
 /** Display all record markers*/
 function MarkersViewRec() {
   //remove the last element in the global markers list because it will be later displayed separately fisrt
-  return listRecords
-    .slice(0, -1)
-    .map((mk) => (
-      <MapView.Marker
-        key={Math.floor(Math.random() * 1000000)}
-        coordinate={mk.latlng}
-        title={mk.title}
-        pinColor="#00ff00"
-      />
-    ));
+  return (
+    listRecords
+      //.slice(0, -1)
+      .map((mk) => (
+        <MapView.Marker
+          key={Math.floor(Math.random() * 1000000)}
+          coordinate={mk.latlng}
+          title={mk.title}
+          pinColor="#00ff00"
+          // <Image source={require('./record.png')} style={{height: 15, width:15 }} />
+        />
+      ))
+  );
 }
 
 //record current location as a future marker with specific color
@@ -186,7 +193,7 @@ export default function App() {
             }
           }
         }
-      }, 15000); //@Todo: create a new var for the delay
+      }, 30000); //@Todo: create a new var for the delay
     })();
   }, [location]);
 
